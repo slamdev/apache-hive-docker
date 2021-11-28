@@ -1,0 +1,25 @@
+name: release
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: release
+    env:
+      HIVE_VERSION: 2.3.9
+      HADOOP_VERSION: 2.10.1
+      IMG: ${{ github.repository_owner }}/apache-hive:${{ env.HIVE_VERSION }}-${{ env.HADOOP_VERSION }}
+    steps:
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build image
+        run: docker build -t ${{ env.IMG }} --build-arg HIVE_VERSION=${{ env.HIVE_VERSION }} --build-arg HADOOP_VERSION=${{ env.HADOOP_VERSION }} .
+      - name: Push image to Dockerhub
+        run: docker push ${{ env.IMG }}
