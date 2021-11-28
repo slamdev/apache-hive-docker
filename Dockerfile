@@ -11,7 +11,8 @@ ENV PATH=${HIVE_HOME}/bin:${HADOOP_HOME}/bin:${PATH}
 
 WORKDIR /opt
 
-RUN wget -q https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz \
+RUN apk add -q --no-progress --no-cache bash \
+ && wget -q https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz \
  && tar -zxf apache-hive-${HIVE_VERSION}-bin.tar.gz && rm -f apache-hive-${HIVE_VERSION}-bin.tar.gz \
  && mv apache-hive-${HIVE_VERSION}-bin hive \
  && wget -q https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz \
