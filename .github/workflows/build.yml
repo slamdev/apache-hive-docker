@@ -3,13 +3,14 @@ on:
   push:
     branches:
       - "main"
+env:
+  HIVE_VERSION: 2.3.9
+  HADOOP_VERSION: 2.10.1
 jobs:
   build:
     runs-on: ubuntu-latest
     name: release
     env:
-      HIVE_VERSION: 2.3.9
-      HADOOP_VERSION: 2.10.1
       IMG: ${{ github.repository_owner }}/apache-hive:${{ env.HIVE_VERSION }}-${{ env.HADOOP_VERSION }}
     steps:
       - name: Login to Dockerhub
